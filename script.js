@@ -8,28 +8,38 @@ let result= document.createElement("p");
 
 const resultsDiv= document.querySelector("#Results");
 const buttonsUser= document.querySelectorAll(".btnUser");
-const btnOperations= document.querySelectorAll("#operations .btnOperation");
+const btnOperations= document.querySelectorAll("#numbers .btnOperation");
 const btnFloat= document.querySelector(".btnFloat");
-const btnBack= document.querySelector(".btnBack");
 const btnEqual= document.querySelector(".btnEqual");
 const btnClear= document.querySelector(".btnClear");
 
  buttonsUser.forEach((button) =>{
     button.addEventListener("click", () =>{
-    if(operationsCount===0 || number1.textContent===""){
-            number1.textContent= `${button.textContent}`;
-            let value1=number1.textContent;
-            number1.textContent=value1;
-            valueFinal1.push(number1.textContent);
-            resultsDiv.append(number1.textContent);
-            
-    }else if(operationsCount>0){
-        number2.textContent= `${button.textContent}`;
-            let value2=number2.textContent;
-            number2.textContent=value2;
-            resultsDiv.append(number2.textContent);
-            valueFinal2.push(number2.textContent);
-    }
+        if(valueFinal1.length>=7){
+            console.log("xd");
+        }else{
+            if(operationsCount===0 || number1.textContent===""){
+                number1.textContent= `${button.textContent}`;
+                let value1=number1.textContent;
+                number1.textContent=value1;
+                valueFinal1.push(number1.textContent);
+                resultsDiv.append(number1.textContent);
+                console.log(valueFinal1.length);
+                
+            }
+        }
+
+        if(valueFinal2.length>=7){
+            console.log("xd2");
+        }else{
+            if(operationsCount>0){
+                number2.textContent= `${button.textContent}`;
+                    let value2=number2.textContent;
+                    number2.textContent=value2;
+                    resultsDiv.append(number2.textContent);
+                    valueFinal2.push(number2.textContent);
+            }
+        }
     });
  });
 
@@ -94,22 +104,29 @@ if(valueFinal1.toString("").includes(".")){
 }
 });
 
-btnBack.addEventListener("click",() =>{
-    if(operationsCount===0){
-        valueFinal1.pop();
-        
-    }else{
-        valueFinal2.pop();
-    }
-});
 
 function add(num1,num2){
     let operationResult=num1+num2;
-    clear();
-    number1.textContent=`${operationResult}`;
-    valueFinal1.push(number1.textContent);
-    console.log(number1.textContent)
-    return operationResult;
+    let operationDecimal=operationResult.toString().split(".");
+    if(Number.isInteger(operationResult)===true){
+        clear();
+        number1.textContent=`${operationResult}`;
+        valueFinal1.push(number1.textContent);
+        console.log(number1.textContent)
+        return operationResult;
+    }else if(operationDecimal[1].length>8){
+        clear();
+        number1.textContent=`${operationResult}`;
+        valueFinal1.push(number1.textContent);
+        console.log(number1.textContent)
+        return Math.round(operationResult*10000)/10000;
+    }else{
+        clear();
+        number1.textContent=`${operationResult}`;
+        valueFinal1.push(number1.textContent);
+        console.log(number1.textContent)
+        return operationResult;
+    }
 }
 
 function subtract(num1,num2){
